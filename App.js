@@ -1,23 +1,41 @@
-import React from 'react';
-import Navbar from './Navbar';
-import { BrowserRouter as Router, Switch, Route, Link }  from 'react-router-dom';
-import Home from './Home';
-import Dashboard from './Dashboard';
-import About from './About';
+import logo from './logo.svg';
+import React, {useState} from 'react';
+import Todolist from './Todolist';
+import './App.css';
 
 const App = () => {
+  const [task,setTask] = useState("");
+  const [todos,setTodos] = useState([]);
+
+  const changeHandler = e =>{
+    setTask(e.target.value)
+  }
+  const submitHandler = e =>{
+    e.preventDefault();
+    const newtodos = [...todos,task];
+    setTodos(newtodos);
+    setTask("");
+  }
+  const deleteHandler = (indexvalue) =>{
+    const newTodos = todos.filter((todos,index) => index !== indexvalue);
+    setTodos(newTodos);
+  }
   return (
     <div>
-      <Router>
-      <Navbar/>
-      <Switch>
-        <Route path="/" exact component={Home} />
-        <Route path="/Dashboard" exact component={Dashboard} />
-        <Route path="/About" exact component={About} />
-      </Switch>
-      </Router>
-     
-      </div>
+      <center>
+        <div className='card'>
+          <div className='card-body'>
+            <div className='card-title'><h2>TO DO MANAGEMENT APPLICATION</h2></div>
+            <form onSubmit={submitHandler}>
+              <input size="30" type="text" name="task" value={task} onChange={changeHandler} /> &nbsp; &nbsp; 
+              <input type="submit" value="Add" name="Add"/>
+            </form>
+           <Todolist todolist={todos} deleteHandler={deleteHandler}/>
+          </div>
+        </div>
+        </center>
+      
+    </div>
   );
 }
 
