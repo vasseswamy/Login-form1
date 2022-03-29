@@ -1,41 +1,44 @@
 import logo from './logo.svg';
-import React, {useState} from 'react';
-import Todolist from './Todolist';
 import './App.css';
+import React,{useState} from 'react';
+
 
 const App = () => {
-  const [task,setTask] = useState("");
-  const [todos,setTodos] = useState([]);
-
-  const changeHandler = e =>{
-    setTask(e.target.value)
-  }
-  const submitHandler = e =>{
-    e.preventDefault();
-    const newtodos = [...todos,task];
-    setTodos(newtodos);
-    setTask("");
-  }
-  const deleteHandler = (indexvalue) =>{
-    const newTodos = todos.filter((todos,index) => index !== indexvalue);
-    setTodos(newTodos);
+  const [input,setInput] = useState("");
+  const [result,setResult] = useState(0);
+  const handler = e =>{
+    setInput(e.target.value);
   }
   return (
-    <div>
-      <center>
-        <div className='card'>
-          <div className='card-body'>
-            <div className='card-title'><h2>TO DO MANAGEMENT APPLICATION</h2></div>
-            <form onSubmit={submitHandler}>
-              <input size="30" type="text" name="task" value={task} onChange={changeHandler} /> &nbsp; &nbsp; 
-              <input type="submit" value="Add" name="Add"/>
-            </form>
-           <Todolist todolist={todos} deleteHandler={deleteHandler}/>
-          </div>
-        </div>
-        </center>
-      
-    </div>
+    <div className="container">
+     
+        <form>
+        <input type="text"  value={input} name="input" onChange={handler}/>
+        </form>
+        <br />
+
+       <button onClick={() => setResult(eval(input))}>Result</button>
+       <h4 className='result1'>Result is : {result}</h4>
+       <div className='keypad'>
+       <button onClick={() => setInput(input+'1')}>1</button>
+       <button onClick={() => setInput(input+'2')}>2</button>
+       <button onClick={() => setInput(input+'3')}>3</button>
+       <button onClick={() => setInput(input+'4')}>4</button>
+       <button onClick={() => setInput(input+'5')}>5</button><br/>
+
+       <button onClick={() => setInput(input+'6')}>6</button>
+       <button onClick={() => setInput(input+'7')}>7</button>
+       <button onClick={() => setInput(input+'8')}>8</button>
+       <button onClick={() => setInput(input+'9')}>9</button>
+       <button onClick={() => setInput(input+'0')}>0</button><br />
+
+       <button onClick={() => setInput(input+'+')}>+</button>
+       <button onClick={() => setInput(input+'-')}>-</button>
+       <button onClick={() => setInput(input+'*')}>*</button>
+       <button onClick={() => setInput(input+'/')}>/</button>
+       <button onClick={() => setInput('')}>clr</button>
+       </div>
+       </div>
   );
 }
 
